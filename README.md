@@ -1,8 +1,30 @@
 # Sorteador de times
 
 Tela simples em Streamlit para sortear 10, 15 ou 20 jogadores em times de cinco.
-Cole os nomes ou envie um arquivo `.txt` em UTF-8. Use um nome por linha ou
-nomes separados por vírgulas. A numeração no formato `1 - Nome` é opcional.
+Cole a lista ou envie um arquivo `.txt` em UTF-8. Use uma linha por jogador:
+
+```text
+Ana, 1
+Bruno, 5,
+Carlos, 3
+```
+
+O peso 1 indica goleiro. Os pesos 2 a 5 indicam habilidade dos jogadores de
+linha, sendo 5 o maior nível. A vírgula final e a numeração `1 - Nome` são
+opcionais. Linhas incompletas ou pesos inválidos impedem o sorteio e mostram
+o número da linha a corrigir.
+
+Cada time tem cinco pessoas, incluindo goleiros. Os goleiros são distribuídos
+com diferença de no máximo um entre times. Se não houver exatamente um por
+time, a tela avisa, mas permite sortear sem inventar goleiros.
+
+O equilíbrio considera a soma dos níveis dos jogadores de linha; o marcador
+de goleiro não soma pontos de habilidade. O sorteio experimenta até 100
+distribuições aleatórias e melhora cada uma trocando jogadores de linha.
+Prioriza a menor diferença entre o maior e o menor total, depois a menor
+dispersão. É uma busca aproximada, sem garantia de ótimo global. Com quantidades
+desiguais de goleiros, os times terão quantidades diferentes de jogadores de
+linha; a comparação continua sendo pela soma, não pela média.
 
 ## Executar localmente
 
@@ -14,7 +36,9 @@ python -m streamlit run app.py
 ```
 
 Abra o endereço informado no terminal. O resultado permanece durante a sessão;
-alterar a lista remove o sorteio anterior. Os nomes enviados pela tela não são
+após um sorteio válido, o campo de nomes ou anexo é limpo. O botão **Sortear
+novamente** reutiliza a lista enviada, mantida apenas na sessão. Inserir uma
+nova lista remove o sorteio anterior. Os nomes enviados pela tela não são
 gravados em arquivo pela aplicação.
 
 ## Publicar por link
